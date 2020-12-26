@@ -13,6 +13,7 @@
 			<th>No.Telpon</th>
 			<th>Alamat</th>
 			<th>Email</th>
+			<th>Username</th>
 			<th>Pilihan</th>
 			</tr>
 		</thead>
@@ -28,6 +29,7 @@
 			<td><?php echo $a->no_telp ?></td>
 			<td><?php echo $a->alamat ?></td>
 			<td><?php echo $a->email ?></td>
+			<td><?php echo $a->username ?></td>
 			<td nowrap="nowrap">
 		  <a class="btn btn-primary btn-xs" href="<?php echo base_url().'admin/edit_anggota/'.$a->id_anggota; ?>"><span class="glyphicon glyphicon-zoom-in"></span></a>
 		  <a class="btn btn-warning btn-xs" href="<?php echo base_url().'admin/hapus_anggota/'.$a->id_anggota; ?>"><span class="glyphicon glyphicon-remove"></span></a></td>
