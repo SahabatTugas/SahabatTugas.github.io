@@ -356,7 +356,7 @@ class Admin extends CI_Controller
 		function transaksi_selesai($id){
 				$data['buku'] = $this->M_perpus->get_data('buku')->result();
 				$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
-				$data['peminjaman'] = $this->db->query("SELECT * FROM peminjaman P, detail_pinjam D, anggota A, buku B WHERE T.id_buku = B.id_buku AND T.id_anggota = A.id_anggota AND T.id_pinjam = '$id'")-result();
+				$data['peminjaman'] = $this->db->query("SELECT * FROM peminjaman P, detail_pinjam D, anggota A, buku B WHERE T. id_buku = B.id_buku AND T.id_anggota = A.id_anggota AND T.id_pinjam = '$id'")-result();
 				$this->load->view('admin/header');
 				$this->load->view('admin/transaksi_selesai',$data);
 				$this->load->view('admin/footer');
@@ -394,6 +394,104 @@ class Admin extends CI_Controller
 							$this->load->view('admin/transaksi_selesai',$data);
 							$this->load->view('admin/footer');
 					}
- }
-}
- ?>
+				}
+		function cetak_laporan_buku(){
+					$data['buku'] = $this->M_perpus->get_data('buku')->result();
+					$this->load->view('admin/header');
+					$this->load->view('admin/laporan_buku', $data);
+					$this->load->view('admin/footer');
+					}
+
+		function laporan_print_buku(){
+					$data['buku'] = $this->M_perpus->get_data('buku')->result();
+					$this->load->view('admin/laporan_print_buku',$data);
+					}
+
+		function laporan_pdf_buku(){
+					/*$this->load->library('dompdf_gen');*/
+					$data['buku'] = $this->M_perpus->get_data('buku')->result();
+					$this->load->view('admin/laporan_pdf_buku', $data);
+					/*
+					$paper_size = 'A4'; // ukuran kertas
+					$orientation = 'landscape'; //tipe format kertas potrait atau landscape
+					$html = $this->output->get_output();
+					$this->dompdf->set_paper($paper_size, $orientation);
+					//Convert to PDF
+					$this->dompdf->load_html($html);
+					$this->dompdf->render()
+					$this->dompdf->stream("laporan_data_buku.pdf",array('Attachment'=>0));
+					
+					// nama file pdf yang di hasilkan*/
+				}
+		function cetak_laporan_anggota(){
+					$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+					$this->load->view('admin/header');
+					$this->load->view('admin/laporan_anggota', $data);
+					$this->load->view('admin/footer');
+				}
+		
+		function laporan_print_anggota(){
+					$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+					$this->load->view('admin/laporan_print_anggota',$data);
+				} 
+		
+		function laporan_pdf_anggota(){
+					/*$this->load->library('dompdf_gen');*/
+					$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+					$this->load->view('admin/laporan_pdf_anggota', $data);
+					/*$paper_size = 'A4'; // ukuran kertas
+					$orientation = 'landscape'; //tipe format kertas potrait atau landscape
+					$html = $this->output->get_output();
+					$this->dompdf->set_paper($paper_size, $orientation);
+				//Convert to PDF
+					$this->dompdf->load_html($html);
+					$this->dompdf->render();
+					$this->dompdf->stream("laporan_data_anggota.pdf",array('Attachment'=>0));
+				// nama file pdf yang di hasilkan*/
+				}
+				
+		function laporan_transaksi(){
+					$dari = $this->input->post('dari');
+					$sampai = $this->input->post('sampai');
+					$this->form_validation->set_rules('dari','Dari Tanggal','required');
+					$this->form_validation->set_rules('sampai','Sampai Tanggal','required');
+				if($this->form_validation->run() != false){
+					$data['laporan'] = $this->db->query("select * from peminjaman p,detail_pinjam d,buku b, anggota a where p.id_pinjam=d.id_pinjam and b.id_buku=d.id_buku and a.id_anggota=p.id_anggota and date(p.tgl_pinjam)>='$dari'and date(p.tgl_pinjam)<='$sampai'")->result();
+					$this->load->view('admin/header');
+					$this->load->view('admin/laporan_filter_transaksi',$data);
+					$this->load->view('admin/footer');
+				}else{
+					$this->load->view('admin/header');
+					$this->load->view('admin/laporan_transaksi');
+					$this->load->view('admin/footer');
+				}
+				}
+				
+		function laporan_print_transaksi(){
+					$dari = $this->input->get('dari');
+					$sampai = $this->input->get('sampai');
+				if($dari != "" && $sampai != ""){
+					$data['laporan'] = $this->db->query("select * from peminjaman p,detail_pinjam d,buku b, anggota a where d.id_buku=b.id_buku and p.id_anggota=a.id_anggota and p.id_pinjam=d.id_pinjam and date(tanggal_input) >='$dari'")->result();
+					$this->load->view('admin/laporan_print_transaksi',$data);
+				}else{
+				redirect("admin/laporan_transaksi");
+				}
+				}
+		
+		function laporan_pdf_transaksi(){
+				/*$this->load->library('dompdf_gen');*/
+					$dari = $this->input->get('dari');
+					$sampai = $this->input->get('sampai');
+					$data['laporan'] = $this->db->query("select * from peminjaman p, detail_pinjam d, buku b, anggota a where d.id_buku=b.id_buku and p.id_anggota=a.id_anggota and p.id_pinjam=d.id_pinjam and date(tanggal_input)>= '$dari'")->result();
+					$this->load->view('admin/laporan_pdf_transaksi', $data);
+				/*$paper_size = 'A4'; // ukuran kertas
+				$orientation = 'landscape'; //tipe format kertas potrait atau landscape
+				$html = $this->output->get_output();
+				$this->dompdf->set_paper($paper_size, $orientation);
+				//Convert to PDF
+				$this->dompdf->load_html($html);
+				$this->dompdf->render();
+ 				$this->dompdf->stream("laporan_data_transaksi.pdf",array('Attachment'=>0));*/	
+				} 
+		}
+?>

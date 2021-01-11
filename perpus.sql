@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Des 2020 pada 15.24
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.3
+-- Waktu pembuatan: 11 Jan 2021 pada 02.56
+-- Versi server: 10.4.17-MariaDB
+-- Versi PHP: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -40,7 +39,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_admin`, `username`, `password`) VALUES
-(1, 'Ahmad Soripada', 'ahmad', 'cbf313d2116bd24901939550c6650e7f');
+(1, 'Muhammad AryaSena', 'admin', '5ba0279fb8b6256023ed1c0a5d61ddd4');
 
 -- --------------------------------------------------------
 
@@ -58,6 +57,13 @@ CREATE TABLE `anggota` (
   `username` varchar(30) NOT NULL,
   `password` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `anggota`
+--
+
+INSERT INTO `anggota` (`id_anggota`, `nama_anggota`, `gender`, `no_telp`, `alamat`, `email`, `username`, `password`) VALUES
+(6, 'jali', 'Laki-Laki', '0895395223735', 'Jl.Balai Rakyat no.5 ', 'bangjalijali@gmail.com', 'jali', 'bangjali');
 
 -- --------------------------------------------------------
 
@@ -89,7 +95,7 @@ INSERT INTO `buku` (`id_buku`, `id_kategori`, `judul_buku`, `pengarang`, `thn_te
 (11, 4, 'Mahir Dengan PHP', 'Adri Kusuma', '2011-02-02', 'Pustaka Bangsa', '654123fe', 10, 'Rak 2', 'gambar1603880547.jpg', '2020-11-18', '0'),
 (12, 4, 'Mahir Mewarnai', 'Achmad Rahmat', '2014-03-03', 'CV. Indo Kreasi', '76234hw342', 10, 'Rak 3', 'gambar1603880663.jpg', '2020-10-28', '0'),
 (13, 4, 'Hukum Fisika', 'Kurnia Sandi', '2013-04-04', 'Wacana Ria', '233214414', 10, 'Rak 2', 'gambar1603880742.jpg', '2020-10-28', '0'),
-(14, 4, 'Mahir Bahasa Inggris', 'Aliuddin', '2013-05-05', 'CV. Indo Kreasi ', '3553234454', 10, 'Rak 1', 'gambar1603880851.jpg', '2020-10-28', '1'),
+(14, 4, 'Mahir Bahasa Inggris', 'Aliuddin', '2013-05-05', 'CV. Indo Kreasi ', '3553234454', 10, 'Rak 1', 'gambar1603880851.jpg', '2021-01-11', '0'),
 (15, 4, 'Public Speaking', 'Pambudi Prasetyo ', '2015-06-06', 'Aldi Pustaka', '843594759', 10, 'Rak 2', 'gambar1603881067.jpg', '2020-10-28', '1'),
 (16, 4, 'Trik SQL', 'Ahdim Makaren', '2014-07-07', 'Wacana Ria', '54234762', 10, 'Rak 1', 'gambar1603881152.jpg', '2020-10-28', '1');
 
@@ -163,6 +169,13 @@ CREATE TABLE `transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data untuk tabel `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_pinjam`, `tgl_pencatatan`, `id_anggota`, `id_buku`, `tgl_pinjam`, `tgl_kembali`, `denda`, `tgl_pengembalian`, `total_denda`, `status_pengembalian`, `status_peminjaman`) VALUES
+(5, '2021-01-11 08:50:16', 6, 14, '2012-12-12', '2013-01-12', 10000, '0000-00-00', 0, '0', '0');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -216,7 +229,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT untuk tabel `anggota`
 --
 ALTER TABLE `anggota`
-  MODIFY `id_anggota` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_anggota` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `buku`
@@ -240,7 +253,7 @@ ALTER TABLE `peminjaman`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

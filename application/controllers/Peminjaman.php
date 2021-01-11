@@ -85,6 +85,7 @@ class Peminjaman extends CI_Controller{
 			'id_anggota' => $where,
 			'tgl_pinjam' => '-',
 			'tgl_kembali' => '-',
+			'tgl_Dikembalikan' => '-',
 			'totaldenda' => '0',
 			'status_peminjaman' => 'Belum Selesai',
 			'status_pengembalian' => 'Belum Kembali');
